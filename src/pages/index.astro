@@ -1,7 +1,216 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+// Definimos los colores verdes favoritos como constantes para uso fácil
+const ACCENT = "text-favorite-600";
+const BG_ACCENT = "bg-favorite-50";
 ---
 
-<Layout title="2025 — eddn.dev">
-	<!-- Content will go here -->
+<Layout title="2025: Para Nosotros">
+  <!-- Contenedor principal con scroll suave (Lenis ya está activo en Layout) -->
+  <article class="relative w-full overflow-hidden bg-white">
+    
+    <!-- HERO SECTION -->
+    <section class="h-screen w-full flex flex-col justify-center items-center relative z-10 px-6">
+      <div class="absolute inset-0 z-0 opacity-20 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-favorite-100 via-white to-white"></div>
+      
+      <h1 class="text-6xl md:text-9xl font-black tracking-tighter text-slate-900 z-10 text-center mix-blend-overlay opacity-0 hero-text">
+        2025
+      </h1>
+      <p class="mt-8 text-xl md:text-2xl font-light text-slate-500 max-w-lg text-center opacity-0 hero-text">
+        Una carta abierta para lo que fuimos, lo que somos y lo que seremos.
+      </p>
+
+      <div class="absolute bottom-12 animate-bounce opacity-0 hero-text">
+        <svg class="w-6 h-6 text-favorite-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+      </div>
+    </section>
+
+    <!-- INTRODUCCIÓN CON FOTO PARALLAX -->
+    <section class="py-24 md:py-40 px-6 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
+      <div class="text-block opacity-0 translate-y-10">
+        <span class="font-mono text-xs font-bold tracking-widest text-favorite-500 uppercase mb-4 block">01. El comienzo</span>
+        <h2 class="text-4xl md:text-6xl font-bold text-slate-900 mb-8 leading-tight">
+          No sabíamos que <span class="italic text-favorite-600">esto</span> crecería tanto.
+        </h2>
+        <p class="text-lg text-slate-600 leading-relaxed font-light">
+          Mirando hacia atrás, es increíble pensar en todos los pequeños momentos que nos trajeron hasta aquí. Este año no es solo un cambio de dígito en el calendario, es la consolidación de todo lo que hemos construido juntos.
+        </p>
+      </div>
+      <div class="relative h-[60vh] w-full overflow-hidden rounded-2xl">
+        <!-- Placeholder Image 1 -->
+        <img 
+          src="https://images.unsplash.com/photo-1490750967868-58cb7506aed6?q=80&w=2787&auto=format&fit=crop" 
+          alt="Nosotros empezando" 
+          class="parallax-img w-full h-full object-cover"
+        />
+      </div>
+    </section>
+
+    <!-- SECCIÓN FULL WIDTH PARALLAX (SCROLLYTELLING) -->
+    <section class="relative w-full py-40 bg-slate-900 text-white overflow-hidden">
+      <div class="absolute inset-0 z-0 opacity-40">
+         <img 
+          src="https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?q=80&w=2787&auto=format&fit=crop" 
+          alt="Background Texture" 
+          class="parallax-bg w-full h-full object-cover scale-110"
+        />
+      </div>
+      
+      <div class="relative z-10 max-w-4xl mx-auto px-6 text-center space-y-24">
+        <div class="text-block opacity-0 translate-y-10">
+          <h3 class="text-3xl md:text-5xl font-bold">Cada risa compartida.</h3>
+        </div>
+        <div class="text-block opacity-0 translate-y-10">
+          <h3 class="text-3xl md:text-5xl font-bold text-favorite-400">Cada silencio cómodo.</h3>
+        </div>
+        <div class="text-block opacity-0 translate-y-10">
+          <h3 class="text-3xl md:text-5xl font-bold">Cada meta cumplida.</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALERÍA DINÁMICA -->
+    <section class="py-40 px-6 max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+        <!-- Columna Izquierda (Texto Sticky) -->
+        <div class="md:col-span-4 sticky top-32 mb-20 md:mb-0">
+           <span class="font-mono text-xs font-bold tracking-widest text-favorite-500 uppercase mb-4 block">02. Recuerdos</span>
+           <h2 class="text-5xl font-black text-slate-900 mb-6">Nuestros<br>Favoritos.</h2>
+           <p class="text-slate-600 mb-8">
+             Hay fotos que no necesitan contexto. Instantes congelados donde fuimos infinitos.
+           </p>
+           <div class="w-12 h-1 bg-favorite-500"></div>
+        </div>
+
+        <!-- Columna Derecha (Fotos en cascada) -->
+        <div class="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-8">
+           <div class="space-y-8 mt-0 sm:mt-20">
+              <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=1000&auto=format&fit=crop" class="parallax-sm rounded-lg shadow-xl w-full aspect-[3/4] object-cover" alt="Memory 1" />
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop" class="parallax-sm rounded-lg shadow-xl w-full aspect-[4/3] object-cover" alt="Memory 2" />
+           </div>
+           <div class="space-y-8">
+              <img src="https://images.unsplash.com/photo-1529139574466-a302c275641b?q=80&w=1000&auto=format&fit=crop" class="parallax-sm rounded-lg shadow-xl w-full aspect-[4/3] object-cover" alt="Memory 3" />
+              <img src="https://images.unsplash.com/photo-1485217988980-11786ced9454?q=80&w=1000&auto=format&fit=crop" class="parallax-sm rounded-lg shadow-xl w-full aspect-[3/5] object-cover" alt="Memory 4" />
+           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CARTA FINAL -->
+    <section class="min-h-screen bg-favorite-50 flex items-center justify-center py-40 px-6">
+      <div class="max-w-2xl mx-auto text-center">
+        <div class="w-24 h-24 mx-auto bg-white rounded-full flex items-center justify-center mb-12 shadow-sm text-4xl">
+          💌
+        </div>
+        <h2 class="text-4xl md:text-5xl font-serif italic text-slate-800 mb-12">
+          "Que este 2025 sea el escenario de nuestra mejor historia."
+        </h2>
+        <p class="text-lg text-slate-600 font-light leading-relaxed mb-12">
+          Te prometo seguir construyendo, seguir aprendiendo y, sobre todo, seguir estando. Gracias por ser mi compañera de código, de vida y de sueños.
+        </p>
+        <p class="font-mono text-sm tracking-widest text-favorite-700 font-bold">
+          CON AMOR, EDD.
+        </p>
+      </div>
+    </section>
+
+  </article>
 </Layout>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  document.addEventListener('astro:page-load', () => {
+    
+    // 1. IMAGE PARALLAX WITH GSAP (Reemplazo robusto de simple-parallax)
+    
+    // Efecto estándar para imágenes principales
+    const images = document.querySelectorAll('.parallax-img');
+    images.forEach(img => {
+      // Aseguramos que la imagen sea más grande que el contenedor para que no se vea el borde al moverse
+      gsap.set(img, { scale: 1.2 }); 
+      
+      gsap.to(img, {
+        yPercent: 20, // Mueve la imagen verticalmente
+        ease: "none",
+        scrollTrigger: {
+          trigger: img.parentElement, // El trigger es el contenedor
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true // Vincula el movimiento directamente al scroll
+        }
+      });
+    });
+
+    // Efecto para fondos (Backgrounds)
+    const bgs = document.querySelectorAll('.parallax-bg');
+    bgs.forEach(bg => {
+      gsap.set(bg, { scale: 1.2 });
+      
+      gsap.fromTo(bg, 
+        { yPercent: -15 }, 
+        {
+          yPercent: 15,
+          ease: "none",
+          scrollTrigger: {
+            trigger: bg.parentElement,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true
+          }
+        }
+      );
+    });
+
+    // Efecto para galería (más sutil y variado)
+    const smallImages = document.querySelectorAll('.parallax-sm');
+    smallImages.forEach((img, i) => {
+      // Alternamos velocidades para dar sensación de profundidad
+      const speed = i % 2 === 0 ? 10 : 20;
+      
+      gsap.to(img, {
+        yPercent: speed,
+        ease: "none",
+        scrollTrigger: {
+          trigger: img,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1 // Un poco de inercia (smooth)
+        }
+      });
+    });
+
+    // 2. TEXT ANIMATIONS
+    
+    // Hero Text Fade In
+    gsap.to('.hero-text', {
+      opacity: 1,
+      y: 0,
+      duration: 1.5,
+      stagger: 0.2,
+      ease: "power3.out",
+      delay: 0.2
+    });
+
+    // Scroll Reveal for Text Blocks
+    const textBlocks = document.querySelectorAll('.text-block');
+    textBlocks.forEach(block => {
+      gsap.to(block, {
+        scrollTrigger: {
+          trigger: block,
+          start: "top 85%", // Aparece un poco antes
+          toggleActions: "play none none reverse"
+        },
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        ease: "power3.out"
+      });
+    });
+
+  });
+</script>
