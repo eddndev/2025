@@ -1,0 +1,169 @@
+---
+const navItems = [
+  { name: "Blog", href: "/blog" },
+  { name: "Trayectoria", href: "/trajectory" },
+  { name: "LeetCode", href: "/leetcode" },
+];
+---
+
+<header
+  class="fixed top-0 left-0 right-0 z-50 mix-blend-difference text-white"
+>
+  <nav
+    class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative z-50"
+  >
+    <!-- Logo -->
+    <a href="/" class="group flex items-center gap-1">
+      <span
+        class="font-black tracking-tighter text-xl text-white group-hover:text-brand-300 transition-colors"
+      >
+        eddn.dev
+      </span>
+      <span
+        class="w-2 h-2 bg-brand-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+      ></span>
+    </a>
+
+    <!-- Desktop Menu -->
+    <ul class="hidden md:flex gap-12">
+      {
+        navItems.map((item, index) => (
+          <li>
+            <a
+              href={item.href}
+              class="group flex items-center gap-2 text-xs font-mono font-bold tracking-widest uppercase text-white hover:text-brand-300 transition-colors"
+            >
+              <span class="text-white/60 group-hover:text-brand-300 transition-colors">
+                0{index + 1} //
+              </span>
+              {item.name}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <!-- Mobile Toggle -->
+    <button
+      id="menu-toggle"
+      aria-label="Toggle Menu"
+      class="md:hidden flex flex-col justify-center items-center w-12 h-12 gap-1.5 p-2 z-50 group border border-transparent transition-colors rounded-none"
+    >
+      <span
+        class="w-8 h-0.5 bg-white transition-all duration-300 ease-out origin-center group-[.is-open]:rotate-45 group-[.is-open]:translate-y-2"
+      ></span>
+      <span
+        class="w-8 h-0.5 bg-white transition-all duration-300 ease-out group-[.is-open]:opacity-0"
+      ></span>
+      <span
+        class="w-8 h-0.5 bg-white transition-all duration-300 ease-out origin-center group-[.is-open]:-rotate-45 group-[.is-open]:-translate-y-2"
+      ></span>
+    </button>
+  </nav>
+</header>
+
+<!-- Mobile Menu Overlay -->
+<div
+  id="mobile-menu"
+  class="fixed inset-0 bg-white z-40 flex flex-col justify-center px-8 opacity-0 invisible transition-all duration-300 md:hidden overflow-hidden"
+>
+  <!-- Background Decoration -->
+  <div class="absolute inset-0 z-0 opacity-30 pointer-events-none [mask-image:linear-gradient(to_top,white,transparent)]">
+    <canvas id="menu-canvas" class="w-full h-full"></canvas>
+  </div>
+
+  <div class="relative z-10 flex flex-col gap-6 max-w-lg">
+    {
+      navItems.map((item, index) => (
+        <a
+          href={item.href}
+          class="flex items-baseline gap-4 text-4xl font-black tracking-tighter text-slate-900 hover:text-brand-600 transition-colors mobile-link group"
+        >
+          <span class="text-sm font-mono text-brand-300 font-normal group-hover:text-brand-600 transition-colors">
+            0{index + 1}
+          </span>
+          {item.name.toUpperCase()}
+        </a>
+      ))
+    }
+  </div>
+
+  <div
+    class="absolute bottom-12 left-8 right-8 pt-8 border-t border-slate-100 flex justify-between font-mono text-xs text-slate-400 uppercase tracking-widest z-10"
+  >
+    <span>© 2025</span>
+    <span>Mexico City</span>
+  </div>
+</div>
+
+<script>
+  import { createRandomVisual, type VisualInstance } from "../utils/visuals";
+
+  let menuVisual: VisualInstance | null = null;
+
+  function setupMenu() {
+    const toggle = document.querySelector("#menu-toggle") as HTMLElement;
+    const menu = document.querySelector("#mobile-menu");
+    const links = document.querySelectorAll(".mobile-link");
+    const body = document.body;
+    const canvas = document.getElementById("menu-canvas") as HTMLCanvasElement;
+
+    if (!toggle || !menu) return;
+
+    // Initialize visual if canvas exists and not already initialized
+    if (canvas && !menuVisual) {
+      menuVisual = createRandomVisual(canvas, "#8b5cf6");
+      menuVisual.init();
+      menuVisual.stop(); // Start paused
+    }
+
+    const closeMenu = () => {
+      toggle.classList.remove("is-open");
+      menu.classList.remove("opacity-100", "visible");
+      menu.classList.add("opacity-0", "invisible");
+      body.style.overflow = "";
+      
+      // Pause animation
+      menuVisual?.stop();
+    };
+
+    const openMenu = () => {
+      toggle.classList.add("is-open");
+      menu.classList.remove("opacity-0", "invisible");
+      menu.classList.add("opacity-100", "visible");
+      body.style.overflow = "hidden";
+
+      // Resume animation
+      menuVisual?.start();
+    };
+
+    // Initialize state (Force closed)
+    closeMenu();
+
+    toggle.onclick = (e) => {
+      e.stopPropagation();
+      const isOpen = toggle.classList.contains("is-open");
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    };
+
+    // Close on link click
+    links.forEach((link) => {
+      link.addEventListener("click", closeMenu);
+    });
+  }
+
+  function cleanupMenu() {
+    if (menuVisual) {
+      menuVisual.destroy();
+      menuVisual = null;
+    }
+  }
+
+  // Bind on every navigation
+  document.addEventListener("astro:page-load", setupMenu);
+  document.addEventListener("astro:before-swap", cleanupMenu);
+</script>
