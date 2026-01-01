@@ -167,9 +167,10 @@
 
     initParticles() {
       this.particles = [];
-      // OPTIMIZACIÓN MÓVIL: Menos densidad
+      // OPTIMIZACIÓN GLOBAL: Menos densidad para todos
       const isMobile = window.innerWidth < 768;
-      const spacing = isMobile ? 22 : 14; // Más espacio entre puntos = menos puntos
+      // Aumentamos espaciado: 25px en móvil, 18px en desktop (antes era 12px)
+      const spacing = isMobile ? 25 : 18; 
       
       const cols = Math.ceil(this.width / spacing) + 2; 
       const rows = Math.ceil(this.height / spacing) + 2;
@@ -178,8 +179,12 @@
         for (let j = -1; j < rows; j++) {
           const x = i * spacing;
           const y = j * spacing;
-          const color = this.colors[Math.floor(Math.random() * this.colors.length)];
-          this.particles.push(new Particle(x, y, color));
+          
+          // Probabilidad de spawn para reducir aún más la cuenta total (80%)
+          if (Math.random() > 0.2) {
+             const color = this.colors[Math.floor(Math.random() * this.colors.length)];
+             this.particles.push(new Particle(x, y, color));
+          }
         }
       }
     }
