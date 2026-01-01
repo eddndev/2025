@@ -1,0 +1,90 @@
+---
+---
+<section id="storm" class="bg-slate-900 text-slate-300 py-40 px-6 relative overflow-hidden">
+  
+  <!-- Textura de fondo (ruido/grano) -->
+  <div class="absolute inset-0 opacity-20 pointer-events-none mix-blend-overlay" 
+       style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%221%22/%3E%3C/svg%3E');">
+  </div>
+
+  <div class="max-w-4xl mx-auto relative z-10 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+    
+    <!-- Texto Columna 1 -->
+    <div class="space-y-12">
+       
+       <div class="opacity-0 storm-reveal">
+         <h2 class="text-3xl font-bold text-white mb-6">
+           La sombra pesada.
+         </h2>
+         <p class="text-lg leading-relaxed text-slate-400">
+           Sé que estas fechas suelen cargarse de una sombra pesada, que existe ese miedo recurrente de que el final del año siempre se vuelve difícil y doloroso. Y tengo que admitir que este cierre no nos dio tregua, la tormenta volvió a aparecer.
+         </p>
+       </div>
+
+       <div class="opacity-0 storm-reveal">
+         <p class="text-lg leading-relaxed text-slate-400">
+           La distancia de estas últimas semanas se sintió inmensa, pero quiero que sepas que fue una barrera puramente física, no del corazón.
+         </p>
+       </div>
+
+    </div>
+
+    <!-- Imagen Oscura -->
+    <div class="relative h-[500px] w-full bg-black overflow-hidden opacity-0 storm-reveal md:translate-y-20">
+      <img src="https://images.unsplash.com/photo-1534234828563-0259b3d0a6c0?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-1000" alt="Tormenta y Distancia" />
+    </div>
+
+  </div>
+
+  <!-- Texto Central Ancho -->
+  <div class="max-w-3xl mx-auto mt-24 md:mt-40 text-center space-y-12 relative z-10">
+    
+    <div class="opacity-0 storm-reveal">
+      <p class="text-xl md:text-2xl font-light text-slate-200">
+        Me dolió que las circunstancias nos distanciaran físicamente justo cuando más quería estar presente. Me frustró que mi cuerpo no pudiera seguirle el ritmo a mis ganas de verte.
+      </p>
+    </div>
+
+    <div class="w-24 h-px bg-slate-700 mx-auto opacity-0 storm-reveal"></div>
+
+    <div class="opacity-0 storm-reveal">
+       <p class="text-2xl md:text-3xl font-serif italic text-white leading-relaxed">
+         "Mi certeza de ti no cambió ni con la fiebre ni con la ausencia."
+       </p>
+       <p class="mt-8 text-slate-400">
+         Ese silencio obligado solo sirvió para amplificar una verdad fuerte: no quiero perder ni un solo segundo más lejos de tu presencia.
+       </p>
+       <p class="mt-8 text-white font-bold tracking-wide">
+         Esa tormenta ha reforzado la idea sobre la que quiero que edifiquemos nuestro próximo año.
+       </p>
+    </div>
+
+  </div>
+
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const reveals = document.querySelectorAll('#storm .storm-reveal');
+  
+  reveals.forEach(el => {
+    gsap.fromTo(el,
+      { opacity: 0, y: 30, filter: "blur(10px)" }, // Empieza borroso para efecto "tormenta"
+      {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        duration: 1.5,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 85%",
+        }
+      }
+    );
+  });
+</script>

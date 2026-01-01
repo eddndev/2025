@@ -1,0 +1,62 @@
+---
+---
+<section id="melancholy" class="min-h-[150vh] bg-slate-100 relative py-24 px-6 flex flex-col items-center justify-center overflow-hidden">
+  
+  <div class="max-w-3xl mx-auto text-center space-y-24 z-10">
+    
+    <!-- Intro -->
+    <div class="opacity-0 scroll-reveal translate-y-10">
+      <span class="text-xs font-mono tracking-[0.3em] text-slate-400 uppercase block mb-6">El Inicio</span>
+      <p class="text-2xl md:text-4xl font-serif text-slate-700 leading-relaxed">
+        Quizás este año no inició de la mejor manera.
+      </p>
+    </div>
+
+    <!-- The Apology -->
+    <div class="opacity-0 scroll-reveal translate-y-10 space-y-8">
+      <p class="text-lg md:text-xl font-light text-slate-500 leading-relaxed">
+        Provoqué demasiados malestares emocionales, y, sinceramente me disculpo por eso, aunque sé en lo profundo de mi conciencia que las disculpas solas no bastan.
+      </p>
+      <div class="w-px h-16 bg-slate-300 mx-auto"></div>
+      <p class="text-lg md:text-xl font-light text-slate-500 leading-relaxed">
+        Me gustaría decir que reafirmé lo que quería: <span class="font-bold text-slate-700">tú</span>, y una vida contigo.
+      </p>
+    </div>
+
+    <!-- The Confession -->
+    <div class="opacity-0 scroll-reveal translate-y-10">
+      <p class="text-lg md:text-xl font-light text-slate-500 leading-relaxed max-w-2xl mx-auto">
+        Realmente no es que lo dudara, pero la invasión de no merecer ser amado fue tanta que tomé malas decisiones, hiriéndote y afectándonos.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Background subtle texture or gradient overlay -->
+  <div class="absolute inset-0 bg-gradient-to-b from-transparent via-slate-200/50 to-transparent pointer-events-none"></div>
+
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Scoped animations just for this component's classes
+  const reveals = document.querySelectorAll('#melancholy .scroll-reveal');
+  
+  reveals.forEach(el => {
+    gsap.to(el, {
+      opacity: 1,
+      y: 0,
+      duration: 1.5,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: el,
+        start: "top 80%", // Aparece cuando está un poco arriba del bottom
+        toggleActions: "play none none reverse"
+      }
+    });
+  });
+</script>

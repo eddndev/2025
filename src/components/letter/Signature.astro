@@ -1,0 +1,87 @@
+---
+---
+<section id="signature" class="min-h-screen bg-white flex flex-col items-center justify-center px-6 relative">
+  
+  <div class="max-w-2xl w-full text-center space-y-16">
+    
+    <!-- Final Thanks -->
+    <div class="space-y-8 opacity-0 reveal-sig">
+      <p class="text-xl md:text-2xl text-slate-600 font-light leading-relaxed">
+        En verdad. Gracias por no soltarme cuando mis fuerzas flaquearon. Gracias por ser mi hogar incluso cuando yo estaba perdido.
+      </p>
+      <p class="text-xl md:text-2xl text-slate-800 font-medium leading-relaxed">
+        Vamos a hacer que todo este dolor valga la pena. Te prometo trabajo duro, tienes toda mi lealtad y mi amor que no se quiere rendir.
+      </p>
+    </div>
+
+    <!-- Divider -->
+    <div class="w-16 h-1 bg-favorite-500 mx-auto rounded-full opacity-0 reveal-sig"></div>
+
+    <!-- Dynamic Signature -->
+    <div class="pt-8 opacity-0 reveal-sig">
+      <p class="text-xs font-mono tracking-[0.4em] text-slate-400 uppercase mb-8">FELIZ AÑO NUEVO</p>
+      
+      <!-- Contenedor fijo para evitar saltos de layout -->
+      <div class="h-24 md:h-32 flex items-center justify-center">
+        <h2 id="dynamic-text" class="text-5xl md:text-7xl font-black text-favorite-600 tracking-tight transition-opacity duration-500">
+          Mi amor
+        </h2>
+      </div>
+
+      <p class="mt-8 font-serif italic text-slate-400 text-lg">- Edd</p>
+    </div>
+
+  </div>
+
+  <!-- Footer minimalista integrado -->
+  <footer class="absolute bottom-8 text-center w-full opacity-0 reveal-sig delay-500">
+    <p class="text-[10px] text-slate-300 font-mono uppercase tracking-widest">
+      2025.eddn.dev
+    </p>
+  </footer>
+
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Animation for reveals
+  const reveals = document.querySelectorAll('#signature .reveal-sig');
+  reveals.forEach(el => {
+    gsap.to(el, {
+      opacity: 1,
+      y: 0,
+      duration: 1.5,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: el,
+        start: "top 85%"
+      }
+    });
+  });
+
+  // Dynamic Text Logic
+  const phrases = ["Mi amor", "mi norte", "mi inspiración", "mi destino", "Mi Hat"];
+  const textEl = document.getElementById('dynamic-text');
+  let index = 0;
+
+  if (textEl) {
+    setInterval(() => {
+      // Fade out
+      textEl.style.opacity = '0';
+      
+      setTimeout(() => {
+        // Change text
+        index = (index + 1) % phrases.length;
+        textEl.innerText = phrases[index];
+        
+        // Fade in
+        textEl.style.opacity = '1';
+      }, 500); // Wait half a second (half of transition duration)
+
+    }, 3000); // Change every 3 seconds
+  }
+</script>

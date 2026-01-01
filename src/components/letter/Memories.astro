@@ -1,0 +1,120 @@
+---
+---
+<section id="memories" class="relative bg-white py-40 overflow-hidden">
+  
+  <!-- Decoración ambiental verde -->
+  <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-favorite-50 rounded-full blur-[120px] opacity-70 -z-10 translate-x-1/3 -translate-y-1/4"></div>
+
+  <div class="max-w-7xl mx-auto px-6">
+    
+    <!-- Header de la sección -->
+    <div class="mb-32 max-w-4xl opacity-0 fade-in-green">
+      <h2 class="text-4xl md:text-6xl font-bold text-slate-900 leading-tight mb-8">
+        A lo largo de estos meses...
+      </h2>
+      <p class="text-xl text-slate-600 font-light leading-relaxed">
+        Pasamos demasiadas experiencias juntos. Te vi crecer, aprender, reír, llorar, dormir, hacer tantas cosas que me hace pensar en lo mucho que te admiro.
+      </p>
+    </div>
+
+    <!-- Layout Mixto: Texto + Fotos -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+      
+      <!-- Columna Izquierda (Visual dominante) -->
+      <div class="lg:col-span-7 space-y-20">
+        
+        <!-- Foto Grande 1 -->
+        <div class="relative group">
+          <div class="overflow-hidden rounded-2xl shadow-xl parallax-wrapper">
+             <img src="https://images.unsplash.com/photo-1516575334481-f85287c2c82d?q=80&w=1000&auto=format&fit=crop" class="w-full h-[600px] object-cover scale-110 parallax-green-img" alt="Admiración" />
+          </div>
+          <!-- Caption flotante -->
+          <div class="absolute -bottom-8 -right-8 bg-white p-6 rounded-lg shadow-lg max-w-xs z-10 opacity-0 fade-in-green" data-delay="0.2">
+            <p class="text-favorite-700 font-serif italic text-lg">"Disfruto de acompañarte, de verte, besarte..."</p>
+          </div>
+        </div>
+
+        <!-- Texto intermedio -->
+        <div class="py-12 px-4 opacity-0 fade-in-green">
+          <p class="text-2xl font-medium text-slate-800 leading-relaxed">
+            Seguir apreciando y admirando tus tejidos, tu risa, tu mirada, tu estilo, tu voz, <span class="text-favorite-600 bg-favorite-50 px-2 rounded">tu todo.</span>
+          </p>
+        </div>
+
+        <!-- Foto Grande 2 -->
+        <div class="overflow-hidden rounded-2xl shadow-xl parallax-wrapper">
+             <img src="https://images.unsplash.com/photo-1529139574466-a302c275641b?q=80&w=1000&auto=format&fit=crop" class="w-full h-[500px] object-cover scale-110 parallax-green-img" alt="Tu estilo" />
+        </div>
+
+      </div>
+
+      <!-- Columna Derecha (Texto + Fotos verticales) -->
+      <div class="lg:col-span-5 space-y-24 lg:pt-32">
+        
+        <div class="opacity-0 fade-in-green">
+          <p class="text-lg text-slate-600 leading-relaxed">
+             Y es algo que no se me olvida nunca, incluso en los valles más bajos en los que hemos estado, siempre te tengo presente.
+          </p>
+        </div>
+
+        <!-- Foto Vertical -->
+        <div class="overflow-hidden rounded-2xl shadow-xl aspect-[3/4] parallax-wrapper">
+           <img src="https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover scale-110 parallax-green-img" alt="Playa" />
+        </div>
+
+        <div class="opacity-0 fade-in-green">
+          <p class="text-xl md:text-2xl text-favorite-800 font-serif italic leading-relaxed border-l-4 border-favorite-400 pl-6">
+             "Siempre pienso que el trabajo, el esfuerzo, las lágrimas y el dolor rendirán sus frutos, porque es para construir algo contigo."
+          </p>
+          <p class="mt-4 text-sm text-slate-400 font-mono tracking-widest uppercase text-right">
+            — Algo que viviremos ambos
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // 1. Text Fades
+  const fades = document.querySelectorAll('#memories .fade-in-green');
+  fades.forEach(el => {
+    const delay = el.getAttribute('data-delay') || 0;
+    gsap.fromTo(el,
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.2,
+        delay: Number(delay),
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 85%",
+        }
+      }
+    );
+  });
+
+  // 2. Parallax Images (dentro de su wrapper)
+  const images = document.querySelectorAll('#memories .parallax-green-img');
+  images.forEach(img => {
+    gsap.to(img, {
+      yPercent: 15, // Movimiento vertical de la imagen dentro del contenedor
+      ease: "none",
+      scrollTrigger: {
+        trigger: img.parentElement,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true
+      }
+    });
+  });
+</script>
