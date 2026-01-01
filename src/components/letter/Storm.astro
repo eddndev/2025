@@ -1,62 +1,71 @@
 ---
 ---
-<section id="storm" class="bg-slate-900 text-slate-300 py-40 px-6 relative overflow-hidden">
+<section id="storm" class="h-screen w-full bg-slate-950 relative overflow-hidden flex items-center justify-center text-slate-100 p-0 m-0">
   
-  <!-- Textura de fondo (ruido/grano) -->
-  <div class="absolute inset-0 opacity-20 pointer-events-none mix-blend-overlay" 
-       style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%221%22/%3E%3C/svg%3E');">
+  <!-- CANVAS DE RAYOS -->
+  <canvas id="storm-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
+  
+  <!-- MÁSCARA SUPERIOR -->
+  <div class="absolute top-0 left-0 w-full h-[30vh] bg-gradient-to-b from-slate-950 via-slate-950/80 to-transparent z-10 pointer-events-none"></div>
+
+  <!-- FLASH OVERLAY -->
+  <div id="storm-flash" class="absolute inset-0 bg-white pointer-events-none opacity-0 mix-blend-overlay z-30"></div>
+
+  <!-- RUIDO TEXTURA -->
+  <div class="absolute inset-0 opacity-[0.12] pointer-events-none mix-blend-overlay z-20" 
+       style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%221%22/%3E%3C/svg%3E');">
   </div>
 
-  <div class="max-w-4xl mx-auto relative z-10 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+  <!-- CONTENEDOR CONTENIDO PINNED -->
+  <div class="pinned-storm relative w-full max-w-6xl px-12 md:px-32 lg:px-40 text-center h-[60vh] flex flex-col items-center justify-center z-40">
     
-    <!-- Texto Columna 1 -->
-    <div class="space-y-12">
-       
-       <div class="opacity-0 storm-reveal">
-         <h2 class="text-3xl font-bold text-white mb-6">
-           La sombra pesada.
-         </h2>
-         <p class="text-lg leading-relaxed text-slate-400">
-           Sé que estas fechas suelen cargarse de una sombra pesada, que existe ese miedo recurrente de que el final del año siempre se vuelve difícil y doloroso. Y tengo que admitir que este cierre no nos dio tregua, la tormenta volvió a aparecer.
-         </p>
-       </div>
-
-       <div class="opacity-0 storm-reveal">
-         <p class="text-lg leading-relaxed text-slate-400">
-           La distancia de estas últimas semanas se sintió inmensa, pero quiero que sepas que fue una barrera puramente física, no del corazón.
-         </p>
-       </div>
-
-    </div>
-
-    <!-- Imagen Oscura -->
-    <div class="relative h-[500px] w-full bg-black overflow-hidden opacity-0 storm-reveal md:translate-y-20">
-      <img src="https://images.unsplash.com/photo-1534234828563-0259b3d0a6c0?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-1000" alt="Tormenta y Distancia" />
-    </div>
-
-  </div>
-
-  <!-- Texto Central Ancho -->
-  <div class="max-w-3xl mx-auto mt-24 md:mt-40 text-center space-y-12 relative z-10">
-    
-    <div class="opacity-0 storm-reveal">
-      <p class="text-xl md:text-2xl font-light text-slate-200">
-        Me dolió que las circunstancias nos distanciaran físicamente justo cuando más quería estar presente. Me frustró que mi cuerpo no pudiera seguirle el ritmo a mis ganas de verte.
+    <!-- Paso 1 -->
+    <div class="step-storm absolute inset-0 flex flex-col items-center justify-center opacity-0 translate-y-8">
+      <p class="text-xl md:text-3xl font-light leading-relaxed text-slate-200 w-full max-w-[85vw] md:max-w-3xl mx-auto">
+        Sé que estas fechas suelen cargarse de una sombra pesada, que existe ese miedo recurrente de que el final del año siempre se vuelve difícil y doloroso.
       </p>
     </div>
 
-    <div class="w-24 h-px bg-slate-700 mx-auto opacity-0 storm-reveal"></div>
+    <!-- Paso 2 -->
+    <div class="step-storm absolute inset-0 flex flex-col items-center justify-center opacity-0 translate-y-8">
+      <p class="text-xl md:text-3xl font-light leading-relaxed text-slate-200 w-full max-w-[85vw] md:max-w-3xl mx-auto">
+        Y tengo que admitir que este cierre no nos dio tregua, la tormenta volvió a aparecer.
+      </p>
+    </div>
 
-    <div class="opacity-0 storm-reveal">
-       <p class="text-2xl md:text-3xl font-serif italic text-white leading-relaxed">
-         "Mi certeza de ti no cambió ni con la fiebre ni con la ausencia."
-       </p>
-       <p class="mt-8 text-slate-400">
-         Ese silencio obligado solo sirvió para amplificar una verdad fuerte: no quiero perder ni un solo segundo más lejos de tu presencia.
-       </p>
-       <p class="mt-8 text-white font-bold tracking-wide">
-         Esa tormenta ha reforzado la idea sobre la que quiero que edifiquemos nuestro próximo año.
-       </p>
+    <!-- Paso 3 -->
+    <div class="step-storm absolute inset-0 flex flex-col items-center justify-center opacity-0 translate-y-8">
+      <p class="text-xl md:text-3xl font-light leading-relaxed text-slate-200 w-full max-w-[85vw] md:max-w-3xl mx-auto text-justify">
+        La distancia de estas últimas semanas se sintió inmensa, pero quiero que sepas que fue una barrera puramente física, no del corazón.
+      </p>
+    </div>
+
+    <!-- Paso 4 -->
+    <div class="step-storm absolute inset-0 flex flex-col items-center justify-center opacity-0 translate-y-8">
+      <p class="text-lg md:text-2xl font-light leading-relaxed text-slate-200 w-full max-w-[85vw] md:max-w-3xl mx-auto text-justify">
+        Me dolió que las circunstancias nos distanciaran físicamente justo cuando más quería estar presente. Me frustró que mi cuerpo no pudiera seguirle el ritmo a mis ganas de verte, y tener que vivir esas últimas semanas lejos, sin poder ser el refugio que merecías.
+      </p>
+    </div>
+
+    <!-- Paso 5 -->
+    <div class="step-storm absolute inset-0 flex flex-col items-center justify-center opacity-0 translate-y-8">
+      <p class="text-xl md:text-3xl font-light leading-relaxed text-slate-200 w-full max-w-[85vw] md:max-w-3xl mx-auto">
+        Pero a pesar de que la época fue dura, tal como temías, aquí seguimos. Mi certeza de ti no cambió ni con la fiebre ni con la ausencia.
+      </p>
+    </div>
+
+    <!-- Paso 6 -->
+    <div class="step-storm absolute inset-0 flex flex-col items-center justify-center opacity-0 translate-y-8">
+      <p class="text-xl md:text-3xl font-light leading-relaxed text-slate-200 w-full max-w-[85vw] md:max-w-3xl mx-auto text-justify">
+        Al contrario, ese silencio obligado solo sirvió para amplificar una verdad fuerte que retumba en mi cabeza: no quiero perder ni un solo segundo más lejos de tu presencia.
+      </p>
+    </div>
+
+    <!-- Paso 7: Clímax -->
+    <div class="step-storm absolute inset-0 flex flex-col items-center justify-center opacity-0 translate-y-8">
+      <p class="text-xl md:text-4xl font-serif italic text-white w-full max-w-[85vw] md:max-w-3xl mx-auto leading-snug">
+        Esa tormenta, lejos de hacerme dudar, ha reforzado la idea sobre la que quiero que edifiquemos nuestro próximo año.
+      </p>
     </div>
 
   </div>
@@ -69,22 +78,108 @@
 
   gsap.registerPlugin(ScrollTrigger);
 
-  const reveals = document.querySelectorAll('#storm .storm-reveal');
-  
-  reveals.forEach(el => {
-    gsap.fromTo(el,
-      { opacity: 0, y: 30, filter: "blur(10px)" }, // Empieza borroso para efecto "tormenta"
-      {
+  class LightningStorm {
+    canvas: HTMLCanvasElement;
+    ctx: CanvasRenderingContext2D;
+    width: number;
+    height: number;
+    flashEl: HTMLElement;
+
+    constructor() {
+      this.canvas = document.getElementById('storm-canvas') as HTMLCanvasElement;
+      this.flashEl = document.getElementById('storm-flash') as HTMLElement;
+      if (!this.canvas) return;
+      
+      this.ctx = this.canvas.getContext('2d')!;
+      this.resize();
+      this.loop = this.loop.bind(this);
+      window.addEventListener('resize', this.resize.bind(this));
+      this.loop();
+    }
+
+    resize() {
+      this.width = window.innerWidth;
+      this.height = window.innerHeight;
+      this.canvas.width = this.width;
+      this.canvas.height = this.height;
+    }
+
+    drawLightning(x: number, y: number, segments: number) {
+      this.ctx.beginPath();
+      this.ctx.moveTo(x, y);
+      let curX = x;
+      let curY = y;
+      for (let i = 0; i < segments; i++) {
+        curX += (Math.random() - 0.5) * 150;
+        curY += (Math.random() * (this.height / segments)) + 20;
+        this.ctx.lineTo(curX, curY);
+      }
+      this.ctx.shadowBlur = 20;
+      this.ctx.shadowColor = "rgba(255, 255, 255, 0.8)";
+      this.ctx.strokeStyle = "rgba(255, 255, 255, 0.9)";
+      this.ctx.lineWidth = Math.random() * 3 + 1;
+      this.ctx.stroke();
+      this.ctx.shadowBlur = 0;
+    }
+
+    triggerFlash() {
+      gsap.fromTo(this.flashEl, { opacity: 0.25 }, { opacity: 0, duration: 0.4, ease: "power2.out" });
+      const startX = Math.random() * this.width;
+      this.drawLightning(startX, -10, 10);
+    }
+
+    loop() {
+      this.ctx.fillStyle = "rgba(2, 6, 23, 0.2)";
+      this.ctx.fillRect(0, 0, this.width, this.height);
+      if (Math.random() > 0.98) {
+        this.triggerFlash();
+      }
+      requestAnimationFrame(this.loop);
+    }
+  }
+
+  const section = document.getElementById('storm');
+  const steps = section ? section.querySelectorAll('.step-storm') : [];
+
+  if (section && steps.length > 0) {
+    new LightningStorm();
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top top",
+        end: "+=8500", // Aumentado para 7 pasos
+        pin: true,
+        scrub: 1,
+      }
+    });
+
+    steps.forEach((step, index) => {
+      // Entrada
+      tl.to(step, {
         opacity: 1,
         y: 0,
-        filter: "blur(0px)",
-        duration: 1.5,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: el,
-          start: "top 85%",
-        }
+        duration: 3,
+        ease: "power2.out"
+      }, index === 0 ? 0 : ">-1");
+      
+      // Pausa lectura
+      tl.to(step, { opacity: 1, duration: 5 }); 
+
+      // Salida (excepto el último)
+      if (index < steps.length - 1) {
+        tl.to(step, {
+          opacity: 0,
+          y: -60,
+          filter: "blur(8px)",
+          duration: 2.5,
+          ease: "power1.inOut"
+        }, ">-1");
       }
-    );
-  });
+    });
+  }
 </script>
+
+<style>
+  .font-serif { font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif; }
+</style>

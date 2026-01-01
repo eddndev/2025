@@ -1,0 +1,205 @@
+---
+---
+<section id="year2026" class="relative min-h-screen w-full bg-white overflow-hidden pb-40">
+  
+  <!-- TRANSICIÓN (Negro -> Blanco) -->
+  <div class="absolute top-0 left-0 w-full h-[30vh] bg-gradient-to-b from-slate-950 to-white z-10 pointer-events-none"></div>
+
+  <!-- CANVAS REPULSOR (Sticky) -->
+  <div class="sticky top-0 h-screen w-full overflow-hidden z-0">
+    <canvas id="heart-canvas" class="w-full h-full opacity-60"></canvas>
+  </div>
+
+  <!-- CONTENIDO -->
+  <div class="relative z-10 w-full max-w-3xl mx-auto px-8 md:px-20 -mt-[80vh] pb-40 flex flex-col gap-32 text-center">
+    <!-- Título 2026 -->
+    <div class="reveal-2026 opacity-0">
+      <h2 class="text-6xl md:text-8xl font-black text-favorite-600 tracking-tighter mb-4">2026</h2>
+      <div class="w-24 h-1 bg-favorite-300 mx-auto rounded-full"></div>
+    </div>
+
+    <!-- Párrafos -->
+    <div class="reveal-2026 opacity-0 space-y-8 bg-white/80 backdrop-blur-[2px] p-6 rounded-2xl shadow-sm border border-white/50">
+        <p class="text-lg md:text-2xl font-light leading-relaxed text-slate-700">Ahora, estamos ante el umbral de un nuevo ciclo, y quiero que el 2026 sea radicalmente distinto. No te ofrezco promesas vacías, te ofrezco mis manos listas para trabajar incansablemente, mi mente afilada para resolver cualquier obstáculo y mi corazón dispuesto a sanar cualquier grieta.</p>
+    </div>
+    <div class="reveal-2026 opacity-0 space-y-8 bg-white/80 backdrop-blur-[2px] p-6 rounded-2xl shadow-sm border border-white/50">
+        <p class="text-lg md:text-2xl font-light leading-relaxed text-slate-700">Este año que entra no será de supervivencia, será de conquista. Quiero que sea el año donde rompamos esa maldición de los finales tristes, donde la salud nos acompañe para celebrar cada paso, grande o pequeño.</p>
+    </div>
+    <div class="reveal-2026 opacity-0 space-y-8 bg-white/80 backdrop-blur-[2px] p-6 rounded-2xl shadow-sm border border-white/50">
+        <p class="text-lg md:text-2xl font-light leading-relaxed text-slate-700">Voy a esforzarme con una intensidad que no has visto antes. Quiero volver a esa versión mía capaz de crear, de sostener y de proteger, pero esta vez con muchas experiencias nuevas, forjada en los errores que ya no cometeré. Quiero ser ese compañero sólido que impulsa tus sueños, que celebra cada puntada de tus tejidos y que está ahí, en primera fila, aplaudiendo tu crecimiento.</p>
+    </div>
+    <div class="reveal-2026 opacity-0 space-y-8 bg-white/80 backdrop-blur-[2px] p-6 rounded-2xl shadow-sm border border-white/50">
+        <p class="text-lg md:text-2xl font-light leading-relaxed text-slate-700">El 2026 será nuestro año de "presencia". Una presencia consciente, física y emocional. Quiero recuperar el tiempo que las circunstancias nos robaron, con creces. Quiero días llenos de experiencias luminosas, de proyectos compartidos y de esa paz que solo se encuentra cuando estamos abrazados en nuestros brazos.</p>
+    </div>
+    <div class="reveal-2026 opacity-0 space-y-8 bg-white/80 backdrop-blur-[2px] p-6 rounded-2xl shadow-sm border border-white/50">
+        <p class="text-lg md:text-2xl font-light leading-relaxed text-slate-700">Estoy decidido a construir una realidad donde te sientas tan segura y amada que cualquier duda del pasado se disuelva por completo. En verdad. Gracias por no soltarme cuando mis fuerzas flaquearon. Gracias por ser mi hogar incluso cuando yo estaba perdido.</p>
+    </div>
+    <div class="reveal-2026 opacity-0 space-y-8 bg-white/80 backdrop-blur-[2px] p-6 rounded-2xl shadow-sm border border-white/50">
+        <p class="text-lg md:text-2xl font-light leading-relaxed text-slate-700">Vamos a hacer que todo este dolor valga la pena. Te prometo trabajo duro, tienes toda mi lealtad y mi amor que no se quiere rendir.</p>
+    </div>
+
+    <!-- CIERRE DINÁMICO -->
+    <div class="reveal-2026 opacity-0 mt-20">
+      <p class="text-xl text-slate-500 mb-6">Feliz año nuevo.</p>
+      <div class="h-20 flex items-center justify-center">
+        <span id="dynamic-text" class="text-4xl md:text-6xl font-serif italic text-favorite-600 font-medium"></span>
+        <span class="text-4xl md:text-6xl font-serif text-favorite-600 animate-pulse">|</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  class HeartRepulsor {
+    canvas: HTMLCanvasElement;
+    ctx: CanvasRenderingContext2D;
+    width: number;
+    height: number;
+    particles: Particle[] = [];
+    
+    // Paleta
+    colors = ['#10b981', '#34d399', '#8b5cf6', '#a78bfa'];
+
+    constructor() {
+      this.canvas = document.getElementById('heart-canvas') as HTMLCanvasElement;
+      if (!this.canvas) return;
+      this.ctx = this.canvas.getContext('2d')!;
+      
+      this.resize();
+      this.loop();
+      
+      // Arrow function handles 'this' binding automatically
+      window.addEventListener('resize', this.resize);
+    }
+
+    resize = () => {
+      if (!this.canvas) return;
+      this.width = this.canvas.clientWidth;
+      this.height = this.canvas.clientHeight;
+      this.canvas.width = this.width;
+      this.canvas.height = this.height;
+      this.initParticles();
+    }
+
+    initParticles() {
+      this.particles = [];
+      const spacing = 12; 
+      const cols = Math.ceil(this.width / spacing) + 2; 
+      const rows = Math.ceil(this.height / spacing) + 2;
+
+      for (let i = -1; i < cols; i++) { 
+        for (let j = -1; j < rows; j++) {
+          const x = i * spacing;
+          const y = j * spacing;
+          const color = this.colors[Math.floor(Math.random() * this.colors.length)];
+          this.particles.push(new Particle(x, y, color));
+        }
+      }
+    }
+
+    calculateRepulsion(p: Particle, scale: number) {
+      const centerX = this.width / 2;
+      const centerY = this.height / 2;
+      
+      const x = (p.x - centerX) / scale;
+      const y = -(p.y - centerY) / scale; 
+
+      const a = x*x + y*y - 1;
+      const val = a*a*a - x*x * y*y*y;
+
+      if (val < 0.2) { 
+        const angle = Math.atan2(p.y - centerY, p.x - centerX);
+        const force = 2.0; 
+        p.vx += Math.cos(angle) * force;
+        p.vy += Math.sin(angle) * force;
+      }
+    }
+
+    loop = () => {
+      if (!this.canvas) return;
+      this.ctx.clearRect(0, 0, this.width, this.height);
+      const scale = Math.min(this.width, this.height) / 30; 
+
+      this.particles.forEach(p => {
+        this.calculateRepulsion(p, scale);
+        p.update();
+        p.draw(this.ctx);
+      });
+
+      requestAnimationFrame(this.loop);
+    }
+  }
+
+  class Particle {
+    x: number; y: number; 
+    ox: number; oy: number; 
+    vx: number; vy: number;
+    color: string; size: number;
+    friction = 0.9;
+    spring = 0.08; 
+
+    constructor(x: number, y: number, color: string) {
+      this.x = x; this.y = y;
+      this.ox = x; this.oy = y;
+      this.vx = 0; this.vy = 0;
+      this.color = color;
+      this.size = 1.2; 
+    }
+
+    update() {
+      const dx = this.ox - this.x;
+      const dy = this.oy - this.y;
+      
+      this.vx += dx * this.spring;
+      this.vy += dy * this.spring;
+
+      this.vx += (Math.random() - 0.5) * 0.5;
+      this.vy += (Math.random() - 0.5) * 0.5;
+
+      this.vx *= this.friction;
+      this.vy *= this.friction;
+
+      this.x += this.vx;
+      this.y += this.vy;
+    }
+
+    draw(ctx: CanvasRenderingContext2D) {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+    }
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    new HeartRepulsor();
+    
+    const items = document.querySelectorAll('.reveal-2026');
+    items.forEach(el => {
+      gsap.fromTo(el, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.2, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 85%" } });
+    });
+
+    const phrases = ["Mi amor", "mi norte", "mi inspiración", "mi destino", "Mi Hat"];
+    const textEl = document.getElementById('dynamic-text');
+    let phraseIndex = 0;
+    if (textEl) {
+      textEl.textContent = phrases[0];
+      setInterval(() => {
+        gsap.to(textEl, { opacity: 0, y: 10, duration: 0.5, onComplete: () => {
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+          textEl.textContent = phrases[phraseIndex];
+          gsap.fromTo(textEl, { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.5 });
+        }});
+      }, 3000);
+    }
+  });
+</script>
+
+<style>
+  .font-serif { font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif; }
+</style>

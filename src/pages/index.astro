@@ -1,36 +1,51 @@
 ---
-import Layout from "../layouts/Layout.astro";
-
-// Import Letter Components (Sequential)
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/ui/Navigation.astro';
 import Melancholy from '../components/letter/Melancholy.astro';
 import Transition from '../components/letter/Transition.astro';
 import Memories from '../components/letter/Memories.astro';
+import StormTransition from '../components/letter/StormTransition.astro';
 import Storm from '../components/letter/Storm.astro';
-import Hope from "../components/letter/Hope.astro";
-import Signature from "../components/letter/Signature.astro";
+import Hope from '../components/letter/Hope.astro';
+import Year2026 from '../components/letter/Year2026.astro';
+
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout title="2025: Para Nosotros">
-  <main class="w-full overflow-x-hidden">
-    		<Melancholy />
-    		
-    		<!-- Espaciador de salida de Melancholy (50vh) -->
-    		<div class="h-[50vh] w-full bg-slate-950"></div>
-    	
-    				<Transition />
-    	
-    				
-    	
-    				<!-- Espaciador con DEGRADADO SUAVE (Negro -> Blanco) -->
-    	
-    				<!-- Esto elimina el corte duro debajo de los blobs -->
-    	
-    				<div class="h-[100vh] w-full bg-gradient-to-b from-slate-950 to-slate-50"></div>
-    	
-    			
-    	
-    				<Memories />    <Storm />
-    <Hope />
-    <Signature />
-  </main>
+<Layout title="Para ti, 2025.">
+	<Navigation />
+	
+	<Melancholy />
+	
+	<!-- Espaciador de salida de Melancholy (50vh) -->
+	<div class="h-[50vh] w-full bg-slate-950"></div>
+
+	<Transition />
+	
+	<!-- Espaciador con DEGRADADO SUAVE (Negro -> Blanco) -->
+	<!-- Esto elimina el corte duro debajo de los blobs -->
+	<div class="h-[100vh] w-full bg-gradient-to-b from-slate-950 to-slate-50"></div>
+
+	<Memories />
+
+	<!-- Espaciador de salida de Memories aumentado a 80vh -->
+	<div class="h-[80vh] w-full bg-slate-50"></div>
+
+	<StormTransition />
+
+	<!-- Espaciador de entrada a Storm (100vh) con degradado inverso -->
+	<div class="h-[100vh] w-full bg-gradient-to-b from-slate-50 to-slate-950"></div>
+
+	<!-- MÁSCARA DE SELLADO (Z-50) -->
+	<!-- Este gradiente flota sobre la unión para ocultar cualquier corte visual -->
+	<div class="h-[40vh] -mb-[20vh] relative z-50 w-full bg-gradient-to-b from-transparent via-slate-950 to-slate-950 pointer-events-none"></div>
+
+	<Storm />
+	
+	<!-- Galería Masonry (Fondo oscuro continuado) -->
+	<Hope />
+
+	<!-- Cierre 2026 (Transición a luz) -->
+	<Year2026 />
 </Layout>

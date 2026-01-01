@@ -1,0 +1,76 @@
+---
+---
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-auto max-w-[90vw]">
+  <div class="flex items-center gap-1 p-2 rounded-full bg-black/40 backdrop-blur-xl border border-white/10 shadow-2xl transition-all duration-300">
+    
+    <a href="#melancholy" class="nav-item group relative px-4 py-2 rounded-full transition-colors duration-300 hover:bg-white/10" aria-label="Ir al inicio">
+      <span class="text-[10px] font-mono uppercase tracking-widest text-white/70 group-[.active]:text-white transition-colors">Inicio</span>
+      <div class="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-favorite-400 rounded-full opacity-0 group-[.active]:opacity-100 transition-opacity"></div>
+    </a>
+
+    <a href="#memories" class="nav-item group relative px-4 py-2 rounded-full transition-colors duration-300 hover:bg-white/10" aria-label="Ir a memorias">
+      <span class="text-[10px] font-mono uppercase tracking-widest text-white/70 group-[.active]:text-white transition-colors">Memorias</span>
+      <div class="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-favorite-400 rounded-full opacity-0 group-[.active]:opacity-100 transition-opacity"></div>
+    </a>
+
+    <a href="#storm" class="nav-item group relative px-4 py-2 rounded-full transition-colors duration-300 hover:bg-white/10" aria-label="Ir a tormenta">
+      <span class="text-[10px] font-mono uppercase tracking-widest text-white/70 group-[.active]:text-white transition-colors">Caos</span>
+      <div class="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-favorite-400 rounded-full opacity-0 group-[.active]:opacity-100 transition-opacity"></div>
+    </a>
+
+    <a href="#gallery" class="nav-item group relative px-4 py-2 rounded-full transition-colors duration-300 hover:bg-white/10" aria-label="Ir a galería">
+      <span class="text-[10px] font-mono uppercase tracking-widest text-white/70 group-[.active]:text-white transition-colors">Fotos</span>
+      <div class="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-favorite-400 rounded-full opacity-0 group-[.active]:opacity-100 transition-opacity"></div>
+    </a>
+
+    <a href="#year2026" class="nav-item group relative px-4 py-2 rounded-full transition-colors duration-300 hover:bg-white/10" aria-label="Ir a 2026">
+      <span class="text-[10px] font-mono uppercase tracking-widest text-white/70 group-[.active]:text-white transition-colors">2026</span>
+      <div class="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-favorite-400 rounded-full opacity-0 group-[.active]:opacity-100 transition-opacity"></div>
+    </a>
+
+  </div>
+</nav>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const navItems = document.querySelectorAll('.nav-item');
+    const sections = document.querySelectorAll('section[id]');
+
+    // Smooth Scroll manual para control total (opcional, CSS scroll-behavior: smooth suele bastar)
+    navItems.forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = item.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+        if (targetSection) {
+          targetSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    // Intersection Observer para resaltar activo
+    const observerOptions = {
+      root: null,
+      rootMargin: '-40% 0px -40% 0px', // Activa cuando la sección ocupa el centro
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Remover activo de todos
+          navItems.forEach(nav => nav.classList.remove('active'));
+          
+          // Añadir activo al correspondiente
+          const id = entry.target.getAttribute('id');
+          const activeNav = document.querySelector(`.nav-item[href="#${id}"]`);
+          if (activeNav) {
+            activeNav.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => observer.observe(section));
+  });
+</script>

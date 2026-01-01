@@ -1,0 +1,129 @@
+---
+---
+<section class="relative h-[250vh] w-[200vw] -ml-[50vw] -my-[125vh] z-30 pointer-events-none overflow-hidden" aria-hidden="true">
+  
+  <div class="absolute inset-0 w-full h-full" 
+       style="-webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 35%, black 65%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0%, black 35%, black 65%, transparent 100%);">
+    
+    <canvas id="storm-transition-blobs" class="w-full h-full block opacity-100 mix-blend-normal blur-[100px]"></canvas>
+  
+  </div>
+
+</section>
+
+<script>
+  class BlobSystem {
+    canvas: HTMLCanvasElement;
+    ctx: CanvasRenderingContext2D;
+    width: number;
+    height: number;
+    blobs: BlobItem[] = [];
+    staticBlobs: BlobItem[] = []; 
+    animationId: number;
+
+    // COLORES PARA CAPA DINÁMICA (Nubes flotantes - Grises)
+    cloudColors = [
+      'rgba(71, 85, 105, 0.7)', // Slate 600
+      'rgba(51, 65, 85, 0.6)',  // Slate 700
+      'rgba(100, 116, 139, 0.4)' // Slate 500 (Leve iluminación)
+    ];
+
+    // COLORES PARA CAPA ESTÁTICA (El fondo profundo - Casi negro)
+    deepColors = [
+      'rgb(15, 23, 42)', // Slate 900
+      'rgb(2, 6, 23)',   // Slate 950
+      'rgb(9, 9, 11)'    // Zinc 950
+    ];
+
+    constructor() {
+      this.canvas = document.getElementById('storm-transition-blobs') as HTMLCanvasElement;
+      if (!this.canvas) return;
+
+      this.ctx = this.canvas.getContext('2d', { alpha: true })!; 
+      this.resize();
+      this.loop = this.loop.bind(this);
+      this.resize = this.resize.bind(this);
+      window.addEventListener('resize', this.resize);
+      this.loop();
+    }
+
+    resize() {
+      this.width = window.innerWidth;
+      this.height = window.innerHeight; 
+      const parentWidth = this.canvas.parentElement?.clientWidth || this.width;
+      const parentHeight = this.canvas.parentElement?.clientHeight || this.height;
+      const resFactor = 0.2; 
+      this.canvas.width = parentWidth * resFactor;
+      this.canvas.height = parentHeight * resFactor;
+      this.ctx.scale(resFactor, resFactor);
+      this.initBlobs(parentWidth, parentHeight); 
+    }
+
+    initBlobs(w: number, h: number) {
+      this.blobs = [];
+      this.staticBlobs = [];
+      const centerY = h / 2;
+
+      // --- 1. CAPA ESTÁTICA OSCURA (El "Suelo" de nubes) ---
+      const staticCount = Math.ceil(w / 100); 
+      for (let i = 0; i < staticCount; i++) {
+        const x = (i * 140) - 100 + (Math.random() * 80); 
+        const yOffset = (Math.random() - 0.5) * 500; 
+        const y = centerY + yOffset;
+        const r = 350 + Math.random() * 300; // Masivos
+        const color = this.deepColors[Math.floor(Math.random() * this.deepColors.length)];
+        this.staticBlobs.push(new BlobItem(x, y, r, color, 0, 0));
+      }
+
+      // --- 2. CAPA DINÁMICA GRIS (Nubes flotantes) ---
+      const blobCount = Math.floor(w / 35);
+      for (let i = 0; i < blobCount; i++) {
+        const x = Math.random() * w;
+        const y = centerY + (Math.random() - 0.5) * (h * 0.8);
+        const r = 100 + Math.random() * 200;
+        const color = this.cloudColors[Math.floor(Math.random() * this.cloudColors.length)];
+        const vx = (Math.random() - 0.5) * 2.0; 
+        const vy = (Math.random() - 0.5) * 0.8;
+        this.blobs.push(new BlobItem(x, y, r, color, vx, vy, w, h));
+      }
+    }
+
+    loop() {
+      // Fondo transparente para que el CSS Blur no tenga "bleed" de color extra
+      this.ctx.clearRect(0, 0, this.canvas.width / 0.2, this.canvas.height / 0.2);
+      
+      this.staticBlobs.forEach(blob => blob.draw(this.ctx));
+      this.blobs.forEach(blob => {
+        blob.update();
+        blob.draw(this.ctx);
+      });
+      this.animationId = requestAnimationFrame(this.loop);
+    }
+  }
+
+  class BlobItem {
+    x: number; y: number; vx: number; vy: number; radius: number; color: string; boundsX: number; boundsY: number;
+    constructor(x: number, y: number, r: number, c: string, vx: number, vy: number, bx = 0, by = 0) {
+      this.x = x; this.y = y; this.radius = r; this.color = c; this.vx = vx; this.vy = vy; this.boundsX = bx; this.boundsY = by;
+    }
+    update() {
+      if (this.vx === 0 && this.vy === 0) return;
+      this.x += this.vx; this.y += this.vy;
+      if (this.x < -this.radius) this.x = this.boundsX + this.radius;
+      if (this.x > this.boundsX + this.radius) this.x = -this.radius;
+      if (this.y < 0) this.vy += 0.05;
+      if (this.y > this.boundsY) this.vy -= 0.05;
+    }
+    draw(ctx: CanvasRenderingContext2D) {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+    }
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    new BlobSystem();
+  });
+  new BlobSystem();
+</script>
