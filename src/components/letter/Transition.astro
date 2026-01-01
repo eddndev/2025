@@ -1,0 +1,155 @@
+---
+---
+<!-- 
+  AJUSTE DE INTERSECCIÓN:
+  Altura: 250vh.
+  Margen negativo: -125vh (Exactamente la mitad).
+  Esto sitúa el centro del componente (y de los blobs) justo sobre el corte de fondo.
+-->
+<section class="relative h-[250vh] w-full -my-[125vh] z-30 pointer-events-none overflow-hidden" aria-hidden="true">
+  
+  <div class="absolute inset-0 w-full h-full" 
+       style="-webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 35%, black 65%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0%, black 35%, black 65%, transparent 100%);">
+    
+    <canvas id="transition-blobs" class="w-full h-full block opacity-100 mix-blend-screen"></canvas>
+  
+  </div>
+
+</section>
+
+<script>
+  class BlobSystem {
+    canvas: HTMLCanvasElement;
+    ctx: CanvasRenderingContext2D;
+    width: number;
+    height: number;
+    blobs: BlobItem[] = [];
+    staticBlobs: BlobItem[] = []; 
+    animationId: number;
+
+    // Colores con alta opacidad para sellar la unión
+    colors = [
+      'rgba(139, 92, 246, 0.9)', 
+      'rgba(124, 58, 237, 0.8)', 
+      'rgba(16, 185, 129, 0.9)',  
+      'rgba(5, 150, 105, 0.8)',   
+      'rgba(76, 29, 149, 0.7)'    
+    ];
+
+    constructor() {
+      this.canvas = document.getElementById('transition-blobs') as HTMLCanvasElement;
+      if (!this.canvas) return;
+
+      this.ctx = this.canvas.getContext('2d')!;
+      this.resize();
+      this.initBlobs();
+      
+      this.loop = this.loop.bind(this);
+      this.resize = this.resize.bind(this);
+      
+      window.addEventListener('resize', this.resize);
+      this.loop();
+    }
+
+    resize() {
+      this.width = window.innerWidth;
+      this.height = window.innerHeight; 
+      this.canvas.width = this.canvas.parentElement?.clientWidth || this.width;
+      this.canvas.height = this.canvas.parentElement?.clientHeight || this.height;
+      this.initBlobs(); 
+    }
+
+    initBlobs() {
+      this.blobs = [];
+      this.staticBlobs = [];
+      
+      const centerY = this.canvas.height / 2;
+
+      // --- CAPA ESTÁTICA CENTRADA ---
+      // Esta capa ahora está matemáticamente centrada sobre la intersección
+      const staticCount = Math.ceil(this.canvas.width / 100); 
+      for (let i = 0; i < staticCount; i++) {
+        const x = (i * 140) - 100 + (Math.random() * 100); 
+        const yOffset = (Math.random() - 0.5) * 500; 
+        const y = centerY + yOffset;
+        
+        const r = 300 + Math.random() * 300; 
+        const color = this.colors[Math.floor(Math.random() * this.colors.length)];
+        
+        this.staticBlobs.push(new BlobItem(x, y, r, color, 0, 0));
+      }
+
+      // --- CAPA DINÁMICA ---
+      const blobCount = Math.floor(this.width / 20); 
+      for (let i = 0; i < blobCount; i++) {
+        const x = Math.random() * this.canvas.width;
+        const y = centerY + (Math.random() - 0.5) * (this.canvas.height * 0.8);
+        const r = 100 + Math.random() * 200;
+        const color = this.colors[Math.floor(Math.random() * this.colors.length)];
+        const vx = (Math.random() - 0.5) * 1.5;
+        const vy = (Math.random() - 0.5) * 1.5;
+        
+        this.blobs.push(new BlobItem(x, y, r, color, vx, vy, this.canvas.width, this.canvas.height));
+      }
+    }
+
+    loop() {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.ctx.filter = 'blur(100px)'; 
+
+      this.staticBlobs.forEach(blob => blob.draw(this.ctx));
+      this.blobs.forEach(blob => {
+        blob.update();
+        blob.draw(this.ctx);
+      });
+      
+      this.ctx.filter = 'none';
+      this.animationId = requestAnimationFrame(this.loop);
+    }
+  }
+
+  class BlobItem {
+    x: number;
+    y: number;
+    vx: number;
+    vy: number;
+    radius: number;
+    color: string;
+    boundsX: number;
+    boundsY: number;
+
+    constructor(x: number, y: number, r: number, c: string, vx: number, vy: number, bx = 0, by = 0) {
+      this.x = x;
+      this.y = y;
+      this.radius = r;
+      this.color = c;
+      this.vx = vx;
+      this.vy = vy;
+      this.boundsX = bx;
+      this.boundsY = by;
+    }
+
+    update() {
+      if (this.vx === 0 && this.vy === 0) return;
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x < -this.radius) this.x = this.boundsX + this.radius;
+      if (this.x > this.boundsX + this.radius) this.x = -this.radius;
+      if (this.y < 0) this.vy += 0.05;
+      if (this.y > this.boundsY) this.vy -= 0.05;
+    }
+
+    draw(ctx: CanvasRenderingContext2D) {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+    }
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    new BlobSystem();
+  });
+  new BlobSystem();
+
+</script>

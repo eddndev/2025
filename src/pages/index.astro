@@ -2,18 +2,23 @@
 import Layout from "../layouts/Layout.astro";
 
 // Import Letter Components (Sequential)
-import Melancholy from "../components/letter/Melancholy.astro";
-import Memories from "../components/letter/Memories.astro";
-import Storm from "../components/letter/Storm.astro";
+import Melancholy from '../components/letter/Melancholy.astro';
+import Transition from '../components/letter/Transition.astro';
+import Memories from '../components/letter/Memories.astro';
+import Storm from '../components/letter/Storm.astro';
 import Hope from "../components/letter/Hope.astro";
 import Signature from "../components/letter/Signature.astro";
 ---
 
 <Layout title="2025: Para Nosotros">
   <main class="w-full overflow-x-hidden">
-    <Melancholy />
-    <Memories />
-    <Storm />
+    		<Melancholy />
+    		
+    		<!-- Espaciador de salida de Melancholy (50vh) -->
+    		<div class="h-[50vh] w-full bg-slate-950"></div>
+    	
+    		<Transition />    	
+    	<Memories />    <Storm />
     <Hope />
     <Signature />
   </main>
