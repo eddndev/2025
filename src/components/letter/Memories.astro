@@ -1,76 +1,76 @@
 ---
 ---
-<section id="memories" class="relative bg-white py-40 overflow-hidden">
+<section id="memories" class="relative py-40 overflow-hidden bg-favorite-50/30">
   
-  <!-- Decoración ambiental verde -->
-  <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-favorite-50 rounded-full blur-[120px] opacity-70 -z-10 translate-x-1/3 -translate-y-1/4"></div>
+  <!-- Elementos decorativos de fondo -->
+  <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+    <div class="absolute top-[10%] right-[-5%] w-[40vw] h-[40vw] bg-favorite-100 rounded-full blur-[100px] opacity-40"></div>
+    <div class="absolute bottom-[10%] left-[-5%] w-[30vw] h-[30vw] bg-brand-100 rounded-full blur-[80px] opacity-30"></div>
+  </div>
 
   <div class="max-w-7xl mx-auto px-6">
     
-    <!-- Header de la sección -->
-    <div class="mb-32 max-w-4xl opacity-0 fade-in-green">
-      <h2 class="text-4xl md:text-6xl font-bold text-slate-900 leading-tight mb-8">
-        A lo largo de estos meses...
-      </h2>
-      <p class="text-xl text-slate-600 font-light leading-relaxed">
+    <!-- Intro Text -->
+    <div class="mb-40 max-w-3xl">
+      <div class="opacity-0 reveal-mem">
+        <span class="text-favorite-600 font-mono text-xs tracking-widest uppercase mb-4 block">Segunda Etapa</span>
+        <h2 class="text-4xl md:text-6xl font-bold text-slate-900 leading-tight mb-8">
+          A lo largo de estos meses...
+        </h2>
+      </div>
+      <p class="text-xl text-slate-600 font-light leading-relaxed opacity-0 reveal-mem">
         Pasamos demasiadas experiencias juntos. Te vi crecer, aprender, reír, llorar, dormir, hacer tantas cosas que me hace pensar en lo mucho que te admiro.
       </p>
     </div>
 
-    <!-- Layout Mixto: Texto + Fotos -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+    <!-- Photo Collage -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-16 items-center">
       
-      <!-- Columna Izquierda (Visual dominante) -->
-      <div class="lg:col-span-7 space-y-20">
-        
-        <!-- Foto Grande 1 -->
-        <div class="relative group">
-          <div class="overflow-hidden rounded-2xl shadow-xl parallax-wrapper">
-             <img src="https://images.unsplash.com/photo-1516575334481-f85287c2c82d?q=80&w=1000&auto=format&fit=crop" class="w-full h-[600px] object-cover scale-110 parallax-green-img" alt="Admiración" />
-          </div>
-          <!-- Caption flotante -->
-          <div class="absolute -bottom-8 -right-8 bg-white p-6 rounded-lg shadow-lg max-w-xs z-10 opacity-0 fade-in-green" data-delay="0.2">
-            <p class="text-favorite-700 font-serif italic text-lg">"Disfruto de acompañarte, de verte, besarte..."</p>
-          </div>
+      <!-- Left: Column of small images -->
+      <div class="md:col-span-4 space-y-12">
+        <div class="overflow-hidden rounded-2xl shadow-lg aspect-[4/5] opacity-0 reveal-mem translate-x-[-20px] parallax-mem" data-speed="0.1">
+          <img src="https://images.unsplash.com/photo-1516575334481-f85287c2c82d?q=80&w=800" class="w-full h-full object-cover scale-110" alt="Recuerdo 1" />
         </div>
-
-        <!-- Texto intermedio -->
-        <div class="py-12 px-4 opacity-0 fade-in-green">
-          <p class="text-2xl font-medium text-slate-800 leading-relaxed">
-            Seguir apreciando y admirando tus tejidos, tu risa, tu mirada, tu estilo, tu voz, <span class="text-favorite-600 bg-favorite-50 px-2 rounded">tu todo.</span>
-          </p>
+        <div class="p-8 bg-white/80 backdrop-blur-sm rounded-3xl shadow-sm opacity-0 reveal-mem">
+          <p class="text-lg text-slate-700 italic">"Disfruto de acompañarte, de verte, besarte, abrazarte..."</p>
         </div>
-
-        <!-- Foto Grande 2 -->
-        <div class="overflow-hidden rounded-2xl shadow-xl parallax-wrapper">
-             <img src="https://images.unsplash.com/photo-1529139574466-a302c275641b?q=80&w=1000&auto=format&fit=crop" class="w-full h-[500px] object-cover scale-110 parallax-green-img" alt="Tu estilo" />
+        <div class="overflow-hidden rounded-2xl shadow-lg aspect-square opacity-0 reveal-mem translate-x-[-20px] parallax-mem" data-speed="0.2">
+          <img src="https://images.unsplash.com/photo-1529139574466-a302c275641b?q=80&w=800" class="w-full h-full object-cover scale-110" alt="Recuerdo 2" />
         </div>
-
       </div>
 
-      <!-- Columna Derecha (Texto + Fotos verticales) -->
-      <div class="lg:col-span-5 space-y-24 lg:pt-32">
-        
-        <div class="opacity-0 fade-in-green">
-          <p class="text-lg text-slate-600 leading-relaxed">
-             Y es algo que no se me olvida nunca, incluso en los valles más bajos en los que hemos estado, siempre te tengo presente.
-          </p>
+      <!-- Center: Main Image -->
+      <div class="md:col-span-4 self-start md:mt-20">
+        <div class="overflow-hidden rounded-full shadow-2xl aspect-[3/4] border-8 border-white opacity-0 reveal-mem scale-90 parallax-mem" data-speed="0.05">
+          <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?q=80&w=1000" class="w-full h-full object-cover" alt="Nosotros" />
         </div>
-
-        <!-- Foto Vertical -->
-        <div class="overflow-hidden rounded-2xl shadow-xl aspect-[3/4] parallax-wrapper">
-           <img src="https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover scale-110 parallax-green-img" alt="Playa" />
+        <div class="mt-12 text-center opacity-0 reveal-mem">
+           <p class="text-favorite-700 font-serif italic text-2xl">"...olerte, estar junto a ti."</p>
         </div>
+      </div>
 
-        <div class="opacity-0 fade-in-green">
-          <p class="text-xl md:text-2xl text-favorite-800 font-serif italic leading-relaxed border-l-4 border-favorite-400 pl-6">
-             "Siempre pienso que el trabajo, el esfuerzo, las lágrimas y el dolor rendirán sus frutos, porque es para construir algo contigo."
-          </p>
-          <p class="mt-4 text-sm text-slate-400 font-mono tracking-widest uppercase text-right">
-            — Algo que viviremos ambos
-          </p>
+      <!-- Right: More memories -->
+      <div class="md:col-span-4 space-y-12 md:mt-40">
+        <div class="overflow-hidden rounded-2xl shadow-lg aspect-[3/4] opacity-0 reveal-mem translate-x-[20px] parallax-mem" data-speed="0.15">
+          <img src="https://images.unsplash.com/photo-1606909477617-67253502802d?q=80&w=800" class="w-full h-full object-cover scale-110" alt="Tus tejidos" />
         </div>
+        <p class="text-slate-500 font-light leading-relaxed opacity-0 reveal-mem">
+          Seguir apreciando y admirando tus tejidos, tu risa, tu mirada, tu estilo, tu voz, tu todo.
+        </p>
+        <div class="overflow-hidden rounded-2xl shadow-lg aspect-[4/5] opacity-0 reveal-mem translate-x-[20px] parallax-mem" data-speed="0.1">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=800" class="w-full h-full object-cover scale-110" alt="Tu risa" />
+        </div>
+      </div>
 
+    </div>
+
+    <!-- Bottom Message -->
+    <div class="mt-40 max-w-4xl mx-auto text-center border-t border-favorite-200 pt-20">
+      <p class="text-2xl md:text-3xl font-light text-slate-700 leading-relaxed opacity-0 reveal-mem">
+        Y es algo que no se me olvida nunca, incluso en los valles más bajos en los que hemos estado, siempre te tengo presente.
+      </p>
+      <div class="mt-12 inline-block px-8 py-4 bg-favorite-600 text-white rounded-full shadow-lg opacity-0 reveal-mem translate-y-4">
+        <p class="font-serif italic text-xl">"Construir algo contigo."</p>
       </div>
     </div>
 
@@ -83,38 +83,41 @@
 
   gsap.registerPlugin(ScrollTrigger);
 
-  // 1. Text Fades
-  const fades = document.querySelectorAll('#memories .fade-in-green');
-  fades.forEach(el => {
-    const delay = el.getAttribute('data-delay') || 0;
-    gsap.fromTo(el,
-      { opacity: 0, y: 40 },
-      {
+  document.addEventListener('astro:page-load', () => {
+    
+    // 1. Reveal animations for all elements
+    const reveals = document.querySelectorAll('#memories .reveal-mem');
+    reveals.forEach(el => {
+      gsap.to(el, {
         opacity: 1,
         y: 0,
+        x: 0,
+        scale: 1,
         duration: 1.2,
-        delay: Number(delay),
         ease: "power3.out",
         scrollTrigger: {
           trigger: el,
-          start: "top 85%",
+          start: "top 90%",
+          toggleActions: "play none none reverse"
         }
-      }
-    );
-  });
-
-  // 2. Parallax Images (dentro de su wrapper)
-  const images = document.querySelectorAll('#memories .parallax-green-img');
-  images.forEach(img => {
-    gsap.to(img, {
-      yPercent: 15, // Movimiento vertical de la imagen dentro del contenedor
-      ease: "none",
-      scrollTrigger: {
-        trigger: img.parentElement,
-        start: "top bottom",
-        end: "bottom top",
-        scrub: true
-      }
+      });
     });
+
+    // 2. Parallax effect for photos
+    const parallaxes = document.querySelectorAll('#memories .parallax-mem');
+    parallaxes.forEach(el => {
+      const speed = el.getAttribute('data-speed') || 0.1;
+      gsap.to(el, {
+        yPercent: -100 * Number(speed),
+        ease: "none",
+        scrollTrigger: {
+          trigger: el,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true
+        }
+      });
+    });
+
   });
 </script>
