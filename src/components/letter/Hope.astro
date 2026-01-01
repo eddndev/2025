@@ -45,6 +45,9 @@ imageFiles = imageFiles.sort(() => Math.random() - 0.5);
 
   </div>
   
+  <!-- Data Bridge para el script -->
+  <div id="gallery-data" data-images={JSON.stringify(imageFiles)} class="hidden"></div>
+  
 </section>
 
 <script>
@@ -55,6 +58,28 @@ imageFiles = imageFiles.sort(() => Math.random() - 0.5);
 
   document.addEventListener('astro:page-load', () => {
     
+    // --- PRELOADER ASÍNCRONO ---
+    // Empezamos a descargar las fotos en segundo plano 2 segundos después
+    // de que cargue la página, para no afectar el renderizado inicial.
+    setTimeout(() => {
+      const dataEl = document.getElementById('gallery-data');
+      if (dataEl && dataEl.dataset.images) {
+        try {
+          const images = JSON.parse(dataEl.dataset.images);
+          console.log(`[Gallery] Iniciando precarga de ${images.length} imágenes...`);
+          
+          images.forEach((src) => {
+            const img = new Image();
+            img.src = src; // Esto fuerza al navegador a cachearla
+          });
+        } catch (e) {
+          console.error("Error precargando galería", e);
+        }
+      }
+    }, 2000);
+
+
+    // --- ANIMACIONES ---
     gsap.to('.reveal-gallery', {
       opacity: 1, y: 0, duration: 1.5, ease: "power2.out", delay: 0.5
     });

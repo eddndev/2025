@@ -130,15 +130,30 @@
     colors = ["#10b981", "#34d399", "#8b5cf6", "#a78bfa"];
 
     constructor() {
-      this.canvas = document.getElementById(
-        "heart-canvas",
-      ) as HTMLCanvasElement;
+      this.canvas = document.getElementById('heart-canvas') as HTMLCanvasElement;
       if (!this.canvas) return;
-      this.ctx = this.canvas.getContext("2d")!;
-
+      this.ctx = this.canvas.getContext('2d')!;
+      
       this.resize();
-      this.loop();
-      window.addEventListener("resize", this.resize);
+      
+      // OPTIMIZACIÓN: Intersection Observer para pausar cuando no se ve
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (!this.animationId) this.loop();
+          } else {
+            if (this.animationId) {
+              cancelAnimationFrame(this.animationId);
+              this.animationId = 0;
+            }
+          }
+        });
+      }, { threshold: 0 }); // Apenas salga 1 pixel, pausar? No, mejor threshold 0 para pausar al salir completo
+      
+      // Observamos la sección padre, no solo el canvas
+      observer.observe(document.getElementById('year2026')!);
+
+      window.addEventListener('resize', this.resize);
     }
 
     resize = () => {
@@ -148,20 +163,22 @@
       this.canvas.width = this.width;
       this.canvas.height = this.height;
       this.initParticles();
-    };
+    }
 
     initParticles() {
       this.particles = [];
-      const spacing = 12;
-      const cols = Math.ceil(this.width / spacing) + 2;
+      // OPTIMIZACIÓN MÓVIL: Menos densidad
+      const isMobile = window.innerWidth < 768;
+      const spacing = isMobile ? 22 : 14; // Más espacio entre puntos = menos puntos
+      
+      const cols = Math.ceil(this.width / spacing) + 2; 
       const rows = Math.ceil(this.height / spacing) + 2;
 
-      for (let i = -1; i < cols; i++) {
+      for (let i = -1; i < cols; i++) { 
         for (let j = -1; j < rows; j++) {
           const x = i * spacing;
           const y = j * spacing;
-          const color =
-            this.colors[Math.floor(Math.random() * this.colors.length)];
+          const color = this.colors[Math.floor(Math.random() * this.colors.length)];
           this.particles.push(new Particle(x, y, color));
         }
       }

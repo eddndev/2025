@@ -43,10 +43,26 @@
 
       this.ctx = this.canvas.getContext('2d', { alpha: true })!; 
       this.resize();
+      
       this.loop = this.loop.bind(this);
       this.resize = this.resize.bind(this);
+      
+      // OPTIMIZACIÓN
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (!this.animationId) this.loop();
+          } else {
+            if (this.animationId) {
+              cancelAnimationFrame(this.animationId);
+              this.animationId = 0;
+            }
+          }
+        });
+      });
+      observer.observe(this.canvas);
+
       window.addEventListener('resize', this.resize);
-      this.loop();
     }
 
     resize() {
